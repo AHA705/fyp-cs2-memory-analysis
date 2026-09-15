@@ -1,0 +1,103 @@
+# ============================================================
+# Project-specific
+# ============================================================
+
+# Physical memory dumps (large + sensitive)
+physical_memory_dumps/*
+
+# Offsets are generated dynamically
+track-enemy/include/memory-offsets/*
+
+# Runtime logs (logger.cpp writes to ./logs/)
+**/logs/*
+
+# ============================================================
+# Build (CMake / Ninja)
+# ============================================================
+build/
+out/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
+compile_commands.json
+Testing/
+.cache/
+vcpkg_installed/
+
+# ============================================================
+# Compiled objects, libraries, executables
+# ============================================================
+*.o
+*.obj
+*.lo
+*.slo
+*.d
+*.gch
+*.pch
+*.dwo
+*.a
+*.la
+*.lai
+*.so
+*.so.*
+*.dylib
+*.lib
+*.dll
+*.exe
+*.out
+*.app
+*.ilk
+*.pdb
+*.idb
+*.ipdb
+
+# ============================================================
+# IDE — Visual Studio / VS Code
+# ============================================================
+.vs/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+*.code-workspace
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+ipch/
+*.ipch
+*.aps
+*.ncb
+*.opendb
+*.opensdf
+*.sdf
+*.cachefile
+*.VC.db
+*.VC.VC.opendb
+*.tlog
+*.vspscc
+*.vssscc
+*.binlog
+
+# ============================================================
+# Python
+# ============================================================
+__pycache__/
+*.pyc
+
+# ============================================================
+# Misc / temp / OS
+# ============================================================
+*.env
+*.log
+*.tmp
+*.bak
+*.swp
+*~
+~$*
+.DS_Store
+Thumbs.db

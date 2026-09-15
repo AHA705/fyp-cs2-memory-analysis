@@ -1,0 +1,6 @@
+[submodule "tools/WinPmem"]
+	path = tools/WinPmem
+	url = https://github.com/Velocidex/WinPmem
+[submodule "tools/cs2-dumper"]
+	path = tools/cs2-dumper
+	url = https://github.com/a2x/cs2-dumper

@@ -1,0 +1,31 @@
+{
+    "version": 8,
+    "configurePresets": [
+        {
+            "name": "track-enemy-debug",
+            "displayName": "Clang MSVC Debug",
+            "description": "Debug build with Clang and Ninja",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/debug",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+                "CMAKE_C_COMPILER": "clang",
+                "CMAKE_CXX_COMPILER": "clang++",
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "track-enemy-release",
+            "displayName": "Clang MSVC Release",
+            "description": "Release build with Clang and Ninja",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/release",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+                "CMAKE_C_COMPILER": "clang",
+                "CMAKE_CXX_COMPILER": "clang++",
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        }
+    ]
+}
