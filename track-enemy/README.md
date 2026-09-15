@@ -1,43 +1,38 @@
 # track-enemy
 
-This is an application of the memory values read. Here I am using it to see the location of enemies through walls and obstacles.
+External memory reader for Counter-Strike 2, built as part of a final year project on anti-cheat and memory access.
 
-## Build command
+Two memory paths are implemented:
 
-```bash
+| Mode       | Mechanism                                                        | Status                     |
+| ---------- | ---------------------------------------------------------------- | -------------------------- |
+| **Virtual**  | `ReadProcessMemory` against `cs2.exe`                            | working — real-time ESP    |
+| **Physical** | manual x64 page-table walk (PML4 → PDPT → PD → PT) over a raw RAM dump | proof of concept          |
 
-g++ -std=c++17 -static -O2 main.cpp logger.cpp -o builds/track-enemy.exe
+Features:
 
+- Resolves player entities from the CS2 entity list and renders position, health and team through a transparent GDI+ overlay (`LWA_COLORKEY`).
+- Reads the view matrix for world → screen projection.
+- Keeps offsets in sync with [`cs2-dumper`](https://github.com/a2x/cs2-dumper) output via the built-in offset checker and `update-offsets.bat`.
+
+## Build
+
+Windows only.
+
+```sh
+cmake --preset track-enemy-release
+cmake --build --preset track-enemy-release
 ```
 
-###
+`spdlog` v1.15.3 is fetched automatically during configuration (FetchContent).
 
-Using C++ as it's fast and has memory pointer manipulation that's easy.
+## Run
 
-main.cpp checklist:
+1. Start CS2.
+2. Run the executable **as administrator** — `OpenProcess(PROCESS_ALL_ACCESS)` fails without elevation.
+3. Configure `config.ini`: screen size, update rate, and memory mode (for physical mode: dump path, directory table base / CR3 and client base address).
 
-- **Refresh Offsets:** pull latest from tools/CS2-dumper/output and mirror into main.cpp.
-- Run as admin against live cs2.exe; `OpenProcess(PROCESS_ALL_ACCESS)` fails otherwise.
-- Usage flow: start CS2, run track-enemy.exe, watch controller/pawn logs for health + position; stop once offsets validated.
+## Layout
 
-## Overlay.cpp
-
-I used Windows GDI+ as it's simple to setup and implement however DirectX might be better overall.
-
-### Stdafx
-
-stdafx is a precompiled header file that contains all the headers you need for your project. It's a good idea to include this in every C++ project, especially if you're working on a large codebase or have multiple source files.
-
-Makes compilation faster.
-
-### Current status
-
-Added RED Boxes and an overlay for tracking enemy health.
-I'll need to:
-
-- Change how I'm refreshing overlay to prevent flickering.
-- Clean up a lot of redundent code I wrote just to get it to work. especially in overlay.cpp
-
-### Features to add:
-
-add a check to make sure "-insecure" is enabled in launch options.
+- `include/`, `src/` — virtual/physical readers, page-table walker, overlay, offset checker
+- `CMakePresets.json` — debug/release presets (Clang + Ninja)
